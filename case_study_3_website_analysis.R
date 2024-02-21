@@ -1,38 +1,38 @@
-# Install and load ggplot2 package
+# Install and load necessary packages
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
   install.packages("ggplot2")
 }
 library(ggplot2)
 
-# Create the data
-inventory_data <- data.frame(
-  ProductID = c(1, 2, 3, 4, 5),
-  ProductName = c("Product A", "Product B", "Product C", "Product D", "Product E"),
-  QuantityAvailable = c(250, 175, 300, 200, 220)
+# Given data
+analytics_data <- data.frame(
+  Date = as.Date(c("2023-01-01", "2023-01-02", "2023-01-03", "2023-01-04", "2023-01-05")),
+  Page_Views = c(1500, 1600, 1400, 1650, 1800),
+  Click_Through_Rate = c(2.3, 2.7, 2.0, 2.4, 2.6)
 )
 
 # Stacked Bar Chart
-ggplot(inventory_data, aes(x = ProductName, y = QuantityAvailable, fill = ProductName)) +
+ggplot(analytics_data, aes(x = Date, y = Page_Views, fill = factor(Click_Through_Rate))) +
   geom_bar(stat = "identity") +
-  labs(title = "Product Inventory - Stacked Bar Chart", x = "Product Name", y = "Quantity Available")
+  labs(title = "Website Analytics - Stacked Bar Chart", x = "Date", y = "Page Views")
 
 # Line Plot
-ggplot(inventory_data, aes(x = ProductName, y = QuantityAvailable, group = 1)) +
+ggplot(analytics_data, aes(x = Date, y = Page_Views)) +
   geom_line() +
-  labs(title = "Product Inventory - Line Plot", x = "Product Name", y = "Quantity Available")
+  labs(title = "Website Analytics - Line Plot", x = "Date", y = "Page Views")
 
 # Scatter Plot
-ggplot(inventory_data, aes(x = ProductName, y = QuantityAvailable, color = ProductName)) +
+ggplot(analytics_data, aes(x = Date, y = Click_Through_Rate)) +
   geom_point() +
-  labs(title = "Product Inventory - Scatter Plot", x = "Product Name", y = "Quantity Available")
+  labs(title = "Website Analytics - Scatter Plot", x = "Date", y = "Click-through Rate")
 
 # Pie Plot
-ggplot(inventory_data, aes(x = "", y = QuantityAvailable, fill = ProductName)) +
+ggplot(analytics_data, aes(x = "", y = Page_Views, fill = factor(Click_Through_Rate))) +
   geom_bar(stat = "pie", width = 1) +
   coord_polar(theta = "y") +
-  labs(title = "Product Inventory - Pie Plot", x = NULL, y = NULL)
+  labs(title = "Website Analytics - Pie Plot", x = NULL, y = NULL)
 
 # Histogram
-ggplot(inventory_data, aes(x = QuantityAvailable, fill = ProductName)) +
-  geom_histogram(binwidth = 20, position = "identity", alpha = 0.7) +
-  labs(title = "Product Inventory - Histogram", x = "Quantity Available", y = "Frequency")
+ggplot(analytics_data, aes(x = Page_Views)) +
+  geom_histogram(binwidth = 100, position = "identity", alpha = 0.7) +
+  labs(title = "Website Analytics - Histogram", x = "Page Views", y = "Frequency")
